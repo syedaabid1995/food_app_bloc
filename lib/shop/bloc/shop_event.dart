@@ -8,13 +8,8 @@ abstract class ShopEvent extends Equatable {
 }
 
 class ShopPageInitializedEvent extends ShopEvent {}
+
 class InitializedEvent extends ShopEvent {}
-
-class ItemAddingCartEvent extends ShopEvent {
-  final List<ShopItem>? cartItems;
-
-  ItemAddingCartEvent(this.cartItems);
-}
 
 class ItemAddedCartEvent extends ShopEvent {
   final ShopItem cartItems;

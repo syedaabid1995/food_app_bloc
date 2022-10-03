@@ -2,9 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_bloc/UI/cart.dart';
+import 'package:food_app/UI/cart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../model/shop.dart';
 import '../shop/bloc/shop_bloc.dart';
 
@@ -24,26 +23,40 @@ class _ProductPageState extends State<ProductPage> {
     super.initState();
   }
   bool loadingData = true;
+
+  // To add data into cart
   List<ShopItem> _cartItems = [];
+
+  // To display all products
   List<ShopItem> shopItems = [];
+
+  // To store value into the internal memory
   SharedPreferences? sharedPreferences;
 
+  // initializing sharedPreferences
   void initSharedPreferences()async {
+
     sharedPreferences = await SharedPreferences.getInstance();
   }
   @override
   Widget build(BuildContext context) {
     return BlocListener<ShopBloc, ShopState>(
       listener: (context, state) {
+
+        // listening states
         if (state is ShopInitial) {
           loadingData = true;
         }
         else if (state is ShopPageLoadedState) {
-          shopItems = state.shopData!.shopitems!;
-          // _cartItems = state.cartData!.shopitems!;
+          shopItems = state.shopData!.shopItems!;
           loadingData = false;
         }
         if (state is ItemAddedCartState) {
+
+          // compare and add items to the cart
+          // if item is there just increasing addedQuantity
+          // while the quantity in ShopItem is for maxQuantity in DB.
+
           if(!_cartItems.contains(state.cartItems)){
             state.cartItems.addedQuantity++;
             _cartItems.add(state.cartItems);
@@ -57,14 +70,14 @@ class _ProductPageState extends State<ProductPage> {
 
 
           }
-
-
+          // after adding it to cart
+          // save the list into sharedPreferences
           var encodedString = jsonEncode(_cartItems).toString();
           sharedPreferences!.setString("cartData", encodedString);
-
           loadingData = false;
         }
         if (state is ItemDeletingCartState) {
+          // compare and delete items from the cart
           if(_cartItems.contains(state.cartItems)){
             print(_cartItems.length);
             _cartItems.forEach((element) {
@@ -78,9 +91,8 @@ class _ProductPageState extends State<ProductPage> {
             });
 
           }
-
-
-
+          // after deleting it to cart
+          // save the list into sharedPreferences
           var encodedString = jsonEncode(_cartItems).toString();
           sharedPreferences!.setString("cartData", encodedString);
           loadingData = false;
@@ -88,6 +100,9 @@ class _ProductPageState extends State<ProductPage> {
       },
       child: BlocBuilder<ShopBloc, ShopState>(
         builder: (context, state) {
+
+          // UI Part here
+
           return SafeArea(
             child: Scaffold(
               body: loadingData
@@ -168,47 +183,6 @@ class _ProductPageState extends State<ProductPage> {
                                     ],
                                   ),
 
-                                  // trailing: Column(
-                                  //   crossAxisAlignment: CrossAxisAlignment.end,
-                                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  //   children: [
-                                  //     Container(
-                                  //       height: 20,
-                                  //       width: 60,
-                                  //     ),
-                                  //     Container(
-                                  //       height: 30,
-                                  //       width: 70,
-                                  //       decoration: BoxDecoration(
-                                  //           border: Border.all(color: Colors.green),
-                                  //           borderRadius: BorderRadius.all(Radius.circular(10))
-                                  //       ),
-                                  //       child: (shopItems[index].addedQuantity==0)
-                                  //           ?
-                                  //       Center(child: InkWell(
-                                  //           onTap: (){
-                                  //             bloc.add(ItemAddedCartEvent(shopItems[index]));
-                                  //
-                                  //           },
-                                  //           child: Text("ADD",style: TextStyle(color: Colors.green),)))
-                                  //           :
-                                  //       Row(
-                                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  //         children: [
-                                  //           InkWell(child: Icon(Icons.remove,),onTap: (){
-                                  //             bloc.add(ItemDeleteCartEvent(shopItems[index]));
-                                  //           },),
-                                  //           Text("${shopItems[index].addedQuantity ?? 0}"),
-                                  //           InkWell(child: Icon(Icons.add,color: Colors.green),onTap: (){
-                                  //             bloc.add(ItemAddedCartEvent(shopItems[index]));
-                                  //
-                                  //           },),
-                                  //
-                                  //         ],
-                                  //       ),
-                                  //     ),
-                                  //   ],
-                                  // ),
 
                                 ),
                               );

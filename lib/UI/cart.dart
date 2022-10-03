@@ -62,7 +62,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     margin: EdgeInsets.only(top: 10),
                     height: MediaQuery.of(context).size.height*.84,
-                    child:                           ListView.separated(
+                    child: ListView.separated(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: widget._cartItems.length,

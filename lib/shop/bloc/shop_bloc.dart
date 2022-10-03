@@ -54,7 +54,7 @@ class ShopBloc extends Bloc<ShopEvent, ShopState> {
 
 
       if (event is InitializedEvent) {
-        emit(DoingSomethingState());
+        emit(BackToInitialState());
       }
       if (event is ShopPageInitializedEvent) {
         ShopData shopData = await shopDataProvider.getShopItems();
@@ -62,11 +62,11 @@ class ShopBloc extends Bloc<ShopEvent, ShopState> {
       }
 
       if (event is ItemAddedCartEvent) {
-        emit(DoingSomethingState());
+        emit(BackToInitialState());
         emit( ItemAddedCartState(event.cartItems));
       }
       if (event is ItemDeleteCartEvent) {
-        emit(DoingSomethingState());
+        emit(BackToInitialState());
         emit( ItemDeletingCartState( event.cartItems));
       }
 

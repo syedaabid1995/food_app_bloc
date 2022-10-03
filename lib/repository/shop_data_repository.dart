@@ -1,6 +1,8 @@
 
 import '../model/shop.dart';
 
+
+// A static data to display list items
 class ShopDataProvider {
   Future<ShopData> getShopItems() async {
     List<ShopItem> shopItems = [
@@ -64,7 +66,7 @@ class ShopDataProvider {
             'https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8YnVyZ2VyfGVufDB8fDB8fA%3D%3D&w=1000&q=80',
       ),
     ];
-    return ShopData(shopitems: shopItems);
+    return ShopData(shopItems: shopItems);
   }
 
 }

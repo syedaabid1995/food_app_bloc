@@ -16,9 +16,8 @@ class ShopPageLoadedState extends ShopState {
   ShopPageLoadedState({this.cartData, this.shopData});
 }
 
-class DoingSomethingState extends ShopState {
-
-  DoingSomethingState();
+class BackToInitialState extends ShopState {
+  BackToInitialState();
 }
 
 class ItemAddedCartState extends ShopState {

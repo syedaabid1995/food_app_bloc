@@ -1,15 +1,6 @@
 class ShopData {
-  List<ShopItem>? shopitems;
-
-  ShopData({this.shopitems});
-
-  void addProduct(ShopItem p) {
-    shopitems!.add(p);
-  }
-
-  void removeProduct(ShopItem p) {
-    shopitems!.add(p);
-  }
+  List<ShopItem>? shopItems;
+  ShopData({this.shopItems});
 }
 
 class ShopItem {
