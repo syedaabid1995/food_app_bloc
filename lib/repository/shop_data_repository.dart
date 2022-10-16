@@ -1,5 +1,6 @@
 
-import '../model/shop.dart';
+import '../model/shop/shop.dart';
+import '../model/shop/shop_data.dart';
 
 
 // A static data to display list items

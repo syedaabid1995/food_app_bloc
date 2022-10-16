@@ -1,4 +1,4 @@
-part of 'shop_bloc.dart';
+part of '../../bloc/shop/shop_bloc.dart';
 
 abstract class ShopState extends Equatable {
   const ShopState();
@@ -8,16 +8,13 @@ abstract class ShopState extends Equatable {
 }
 
 class ShopInitial extends ShopState {}
+class CartInitial extends ShopState {}
 
 class ShopPageLoadedState extends ShopState {
   final ShopData? shopData;
   final ShopData? cartData;
 
   ShopPageLoadedState({this.cartData, this.shopData});
-}
-
-class BackToInitialState extends ShopState {
-  BackToInitialState();
 }
 
 class ItemAddedCartState extends ShopState {
@@ -30,4 +27,8 @@ class ItemDeletingCartState extends ShopState {
   final ShopItem cartItems;
 
   ItemDeletingCartState(this.cartItems);
+}
+class PlaceOrderState extends ShopState {
+
+  PlaceOrderState();
 }

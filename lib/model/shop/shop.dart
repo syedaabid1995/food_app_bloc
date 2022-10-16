@@ -1,15 +1,29 @@
-class ShopData {
-  List<ShopItem>? shopItems;
-  ShopData({this.shopItems});
-}
 
+import 'package:hive/hive.dart';
+part 'shop.g.dart';
+
+@HiveType(typeId: 4)
 class ShopItem {
+
+  @HiveField(0)
   String? imageUrl;
+
+  @HiveField(1)
   String? thumbnail;
+
+  @HiveField(2)
   String? title;
+
+  @HiveField(3)
   double? price;
+
+  @HiveField(4)
   int? maxQuantity;
+
+  @HiveField(5)
   int addedQuantity = 0;
+
+  @HiveField(6)
   String? description;
 
   ShopItem(

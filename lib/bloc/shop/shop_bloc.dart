@@ -37,11 +37,14 @@
 
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_app/utils/save_to_hive.dart';
+import 'package:hive/hive.dart';
 
+import '../../model/shop/shop_data.dart';
 import '../../repository/shop_data_repository.dart';
 
 import 'package:equatable/equatable.dart';
-import '../../model/shop.dart';
+import '../../model/shop/shop.dart';
 
 part 'shop_event.dart';
 part 'shop_state.dart';
@@ -53,8 +56,8 @@ class ShopBloc extends Bloc<ShopEvent, ShopState> {
     on<ShopEvent>((event, emit) async {
 
 
-      if (event is InitializedEvent) {
-        emit(BackToInitialState());
+      if (event is CartInitializedEvent) {
+        emit(CartInitial());
       }
       if (event is ShopPageInitializedEvent) {
         ShopData shopData = await shopDataProvider.getShopItems();
@@ -62,12 +65,21 @@ class ShopBloc extends Bloc<ShopEvent, ShopState> {
       }
 
       if (event is ItemAddedCartEvent) {
-        emit(BackToInitialState());
+        emit(CartInitial());
         emit( ItemAddedCartState(event.cartItems));
       }
       if (event is ItemDeleteCartEvent) {
-        emit(BackToInitialState());
+        emit(CartInitial());
         emit( ItemDeletingCartState( event.cartItems));
+      }
+      if (event is PlaceOrderEvent) {
+        var cartData = HiveData(event.userBox!).getRecentOrders+event.cartItems;
+
+        HiveData(event.userBox!).setRecentOrders(cartData);
+        HiveData(event.userBox!).setCartDetails([]);
+        emit( PlaceOrderState());
+        ShopData shopData = await shopDataProvider.getShopItems();
+        emit(ShopPageLoadedState(shopData: shopData,));
       }
 
 

@@ -9,7 +9,8 @@ abstract class ShopEvent extends Equatable {
 
 class ShopPageInitializedEvent extends ShopEvent {}
 
-class InitializedEvent extends ShopEvent {}
+
+class CartInitializedEvent extends ShopEvent {}
 
 class ItemAddedCartEvent extends ShopEvent {
   final ShopItem cartItems;
@@ -20,4 +21,9 @@ class ItemAddedCartEvent extends ShopEvent {
 class ItemDeleteCartEvent extends ShopEvent {
   final ShopItem cartItems;
   ItemDeleteCartEvent(this.cartItems, );
+}
+class PlaceOrderEvent extends ShopEvent {
+  final Box? userBox;
+  final List<dynamic> cartItems;
+  PlaceOrderEvent(this.userBox, this.cartItems);
 }
